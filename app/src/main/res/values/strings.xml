@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Rick &amp; Morty Dex</string>
+    <string name="title_activity_characters_list">CharactersListActivity</string>
+</resources>
