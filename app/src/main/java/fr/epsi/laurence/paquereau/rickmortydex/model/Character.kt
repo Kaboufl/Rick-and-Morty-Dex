@@ -1,5 +1,10 @@
+// Character.kt
 package fr.epsi.laurence.paquereau.rickmortydex.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Character(
     val id: Int,
     val name: String,
@@ -9,8 +14,5 @@ data class Character(
     val gender: String,
     val origin: Location,
     val location: Location,
-    val image: String,
-    val episode: List<String>,
-    val url: String,
-    val created: String
-)
+    val image: String
+) : Parcelable

@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -24,16 +25,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             RickMortyDexTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                    Button(
-                        onClick = {
-                            val intent: Intent = Intent(applicationContext, CharactersListActivity::class.java)
-                            startActivity(intent)
+                    Column(modifier = Modifier.padding(innerPadding)) {
+                        Greeting(name = "Android")
+                        Button(
+                            onClick = {
+                                val intent: Intent = Intent(applicationContext, CharactersListActivity::class.java)
+                                startActivity(intent)
+                            }
+                        ) {
+                            Text("Go to Characters List")
                         }
-                    ) { }
+                    }
                 }
             }
         }
