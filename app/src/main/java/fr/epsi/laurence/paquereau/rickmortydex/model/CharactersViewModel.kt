@@ -1,7 +1,10 @@
 package fr.epsi.laurence.paquereau.rickmortydex.model
 
 import android.util.Log
+import android.util.MutableBoolean
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,16 +14,22 @@ import kotlinx.coroutines.launch
 class CharactersViewModel: ViewModel() {
     private val apiService = RickAndMortyApiDataSource.dataSource
     val characters: MutableState<List<Character>> = mutableStateOf(emptyList())
+    private val pageIndex: MutableIntState = mutableIntStateOf(1)
+    val isMoreCharacters: MutableState<Boolean> = mutableStateOf(true)
 
     fun getCharacters() {
         viewModelScope.launch {
             try {
-                val response = apiService.getCharacters()
-                val data = response.body()
-                if (data == null) {
-                    throw Exception("Empty response ! D:")
+                val response = apiService.getCharacters(pageIndex.intValue)
+                val data = response.body() ?: throw Exception("Empty response ! D:")
+
+                characters.value += data.results
+                // characters.value = data.results
+
+                if (data.info.next != null) {
+                    pageIndex.value += 1
                 } else {
-                    characters.value = data.results
+                    isMoreCharacters.value = false
                 }
 
             } catch (e: Exception) {
