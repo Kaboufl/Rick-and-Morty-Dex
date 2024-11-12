@@ -5,15 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +15,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import fr.epsi.laurence.paquereau.rickmortydex.model.CharactersViewModel
 import fr.epsi.laurence.paquereau.rickmortydex.ui.theme.RickMortyDexTheme
 
@@ -63,9 +59,18 @@ fun CharactersList(viewModel: CharactersViewModel, modifier: Modifier) {
     LazyColumn(
         modifier = modifier
     ) {
-        items(characters) {
-            character ->
+        items(characters) { character ->
+            Column(modifier = Modifier.padding(8.dp)) {
                 Text(text = character.name)
+                AsyncImage(
+                    model = character.image,
+                    contentDescription = "Image de ${character.name}",
+                    modifier = Modifier
+                        .height(100.dp)
+                        .fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
     }
 
